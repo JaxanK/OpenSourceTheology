@@ -1,183 +1,108 @@
+**Note to readers from outside the theological space**: This is a data systems and knowledge representation project. Theology was chosen as the initial domain because it supplies unusually rich, publicly available, historically deep textual data with well-documented layers of reinterpretation. The tooling and modeling techniques are intended to be portable. Primary intention is to explore usage of AI agents to atomize complex historical contexts and trends into manageable and irreducible atomic data. Once relevant sections of graph data and ideas across history are atomized, the foundation can be systematically audited, and corruptions highlighted through a Directed Acyclic Graph (DAG). Project will explore the limits of this approach.
+
+This project is a companion to an emerging field we have come to call Open Source Theology. It is a domain full of opportunity to solve complex historical data and corruption problems in a domain traditionally dominated by division more than unity. For the first time in history manuscripts have been published to the internet and real historical analysis can take place. This platform is designed to aid these efforts to turn endless debates into productive analysis.
 
 
-# Jaxan's Electric Starter App
-Based off the Electric Starter App template, this template contains setups for a
-few additional features
-1) TailWindCSS for Styling
-2) Automatic Versioning and simplistic release pipeline integrated into build tools (windows only)
-3) System Tray Icon and Menu
-4) Portal Setup and Kindly Data
-5) VS Code setups for Calva Repl, Tailwind extension and others
-6) A Basic Application controls setup for startup and running in dev or production modes
-7) Bat Files for the windows terminal commands to facilitate ease of use and
-   make it easy for beginners to know what to do
-8) Font-Awesome and Icons through Iconify
+# Sovereign Node
 
+**A general-purpose platform for exploring and linting corrupted, historically layered textual data.**
 
-## TailWindCSS specifics
-- File will rebuild alongside the hot reloading features of the Electric
-  Template. It takes a little bit more time to recompile and apply the file so
-  you will see a delay if you update and add new TailWind Classes. If you are
-  doing many of these changes (Working on the front end) then you will want to
-  run the RunTailWindWatch.bat file which will cause the recompile to happen
-  faster. It is a separate process though, so only start it when you are wanting
-  more instant feedback for style changes.
-- A convention is built into the VS Code setup so that the TailWindCSS extension
-  works with clojure. It is simple REGEX in the source code so be aware the
-  following patterns will interpret the strings as tailwind strings and thus
-  show colors and provide autocomplete options for library of TailWind Classes
+Sovereign Node is an open-source knowledge graph and semantic analysis system designed to ingest complex textual domains, extract claims, map them to underlying primitives, and surface institutional drift, rhetorical patterns, and logical inconsistencies.
 
-```Clojure
-varnameStyle "Tailwind String..." 
-{:class "TailWind String..."} 
-{:class (str "TailWind String..." varnameStyle)}
-```
+Theology is used as the initial high-signal dataset because it offers one of the richest available environments for this kind of work: centuries of textual variants, layered translations, institutional reinterpretation, and high-stakes rhetorical language. The architecture itself is domain-agnostic and intended to generalize to other historically dense corpora (legal history, medical literature, technical documentation with legacy assumptions, etc.).
 
-## Suggested VS Code Extensions
-- **Calva** (betterthantomorrow.calva)
-- **Batch Runner** (NilsSoderman.batch-runner) - Gives ability to right click on windows bat file and run it
-- **Peacock** (johnpapa.vscode-peacock) - Gives ability to set color of VS Code window for the project (helpful when multiple projects open)
-- **TailWindCSS IntelliSense** (bradlc.vscode-tailwindcss) - Provides autocompletion and shows colors for tailwind classes
-- **Material Design Icons Intellisense** (lukas-tr.materialdesignicons-intellisense) - Shows Icons for mdi icons and provides a browser to select icons
+## The Problem
 
-I also have some other personal preference suggestions if you scroll down to the end of this page.
+Many important domains accumulate **corrupted data** over time:
 
-## Automatic Versioning
-Essentially you set a directory where your release files are to be stored, and
-on the building of the clojure project the version number will get updated
-automatically both in the jar file produced and in the version.clj file in the
-code. The updated version number is based on an incremented version number from
-the last released version of format   1.2.3   where the "3" would get
-autoincremented to 4 on each release so the next version automatically versioned
-will be 1.2.4
+- Original source material gets filtered through institutional incentives
+- Rhetorical patterns become standardized without their original context
+- Translations and interpretations drift while retaining the appearance of continuity
+- Claims get detached from their primary evidence layers
 
-The nice thing is you can work on a release version for as long as you want and
-the version will not increase until the released jar file actually shows up in
-the release directory.
+Traditional search and LLM summarization tools are poorly suited to this problem because they optimize for fluency rather than traceability. They tend to reproduce the dominant institutional framing instead of exposing where the framing diverged from the source material.
 
-Note there is a bat file (RunLastestRelease.bat) that will find and run the
-lastest release in the release directory as well but this only works for Windows
-since it is based off the windows terminal. Need to write the linux and Mac
-variants for all the bat files.
+## Approach
 
-If use the run lastest release file as the bat file in my windows starter
-program, then you can use the release directory as a network or cloud folder and
-get most of the benefits of a continuous delivery pipeline without needing to
-bug your users to install a patch with each bug fix.
+Sovereign Node treats textual domains as **immutable, versioned graphs** rather than flat documents.
 
-# Electric Starter App (Original ReadMe Documentation)
+Core model:
 
-A minimal Electric Clojure app, and instructions on how to integrate it into an
-existing app. For more demos and examples, see [Electric
-Fiddle](https://github.com/hyperfiddle/electric-fiddle).
+- **Idea Nodes** — abstract concepts (e.g. "restorative justice", "divine council", "atonement mechanics")
+- **Assertion Nodes** — specific claims made by individuals or institutions about those ideas
+- **Evidence Layer** — primary source atoms (Strong’s numbers, morphological data, manuscript variants, lexical entries from Thayer’s/LSJ, ANE parallels, etc.)
 
-## Instructions
+A via-negativa analysis engine (the "linter") compares modern claims against the evidence layer and flags:
+- Detachment from primary lexical/historical data
+- Rhetorical patterns that function as institutional control mechanisms
+- Logical inconsistencies introduced by later interpretive layers
+- Over-reliance on secondary or tertiary sources
 
-Dev build:
+The system is designed to remain useful even when the underlying data is incomplete or contested. It surfaces **what is being assumed** rather than enforcing a single correct interpretation.
 
-* Shell: `clj -A:dev -X dev/-main`, or repl: `(dev/-main)`
-* http://localhost:8080
-* Electric root function: [src/TemplateElectric/main.cljc](src/TemplateElectric/main.cljc)
-* Hot code reloading works: edit -> save -> see app reload in browser
+## Why Start with Theology
 
-Prod build:
+Theology provides an unusually good test corpus for corrupted data analysis:
 
-```shell
-clj -X:build:prod build-client
-clj -M:prod -m prod
-```
+- Extremely long revision history with clear institutional breakpoints (pre- and post-Constantinian, Reformation, modern denominational formation)
+- Publicly available high-quality lexical and manuscript datasets (MorphGNT, Open Scriptures Hebrew Bible, Thayer’s, LSJ, Dead Sea Scrolls variants)
+- Dense rhetorical tradition with well-documented patterns of reuse and reframing
+- Existing independent scholarship (e.g. work in the style of Michael Heiser or the Berean Patriot) that already performs rigorous source tracing
 
-Uberjar (optional):
-```
-clj -X:build:prod uberjar :build/jar-name "target/app.jar"
-java -cp target/app.jar clojure.main -m prod
-```
+The goal is not to produce theological conclusions. The goal is to build tooling that makes the **process** of source tracing and drift detection scalable and reproducible across any domain that has accumulated similar layers of institutional interpretation.
 
-Deployment example:
-- [Dockerfile](Dockerfile)
-- fly.io deployment through github actions: [.github/workflows/deploy.yml](.github/workflows/deploy.yml) & [fly.toml](fly.toml)
+## Technical Architecture
 
-## Integrate it in an existing clojure app
+- **Data Layer**: Immutable facts with strong support for historical versioning
+  and graph queries.
+- **Primitive Atoms**: Strong’s numbers + upgraded lexical data (Thayer’s, LSJ) + morphological sequences (MorphGNT / OSHB) linked through Book-Chapter-Verse containers.
+- **Decoupled Model**: Idea nodes are kept separate from the evidence that supports or contradicts them. This allows multiple scholarly or institutional assertions to attach to the same concept without forcing premature consensus.
+- **Analysis Engine**: Structured output from capable models (AI model TBD) that map free text to the graph while remaining auditable.
+- **UI**: Clojure Electric for reactive, full-stack interfaces with minimal boilerplate. Designed for both quick exploration and deeper research workflows.
+- **Extensibility**: Vector embeddings and clustering for trend detection across large corpora of claims over time.
 
-1. Look at [src-prod/prod.cljc](src-prod/prod.cljc). It contains:
-    - server entrypoint
-    - client entrypoint
-    - necessary configuration
-2. Look at [src/TemplateElectric/server_jetty.clj](src/TemplateElectric/server_jetty.clj). It contains:
-   - an example Jetty integration
-   - required ring middlewares
+The architecture prioritizes **traceability** and **composability** over convenience features. Every relationship in the graph should be explainable back to primary source atoms.
 
-## Build documentation
+## Current Status
 
-Electric Clojure programs compile down to separate client and server target programs, which are compiled from the same Electric application source code.
+Early development. The initial focus is on:
 
-* For an Electric client/server pair to successfully connect, they must be built from matching source code. The server will reject mismatched clients (based on a version number handshake coordinated by the Electric build) and instruct the client to refresh (to get the latest javascript artifact).
-* [src-build/build.cljc](src-build/build.clj bakes the Electric app version into both client and server artifacts.
-  * server Electric app version is baked into `electric-manifest.edn` which is read in [src-prod/prod.cljc](src-prod/prod.cljc).
-  * client Electric app version is baked into the .js artifact as `hyperfiddle.electric-client/ELECTRIC_USER_VERSION`
+1. Ingesting and normalizing open lexical and morphological datasets into a queryable graph.
+2. Building the core schema for Idea / Assertion / Evidence separation.
+3. Creating a basic exploration interface for Strong’s numbers, lexical entries, and verse-level data.
+4. Establishing clean ingestion pipelines for both scholarly monographs and modern textual claims (sermons, articles, etc.).
 
-Consequently, you need **robust cache invalidation** in prod!
-  * In this example, complied js files are fingerprinted with their respective hash, to ensure a new release properly invalidates asset caches. [index.html](resources/public/TemplateElectric/index.html) is templated with the generated js file name.
-  * The generated name comes from shadow-cljs's `manifest.edn` file (in `resources/public/TemplateElectric/js/manifest.edn`), produced by `clj -X:build:prod build-client`. Watch out: this shadow-cljs compilation manifest is not the same manifest as `electric-manifest.edn`!
-  * Notice that [src/TemplateElectric/server_jetty.clj](src/TemplateElectric/server_jetty.clj) -> `wrap-index-page` reads `:manifest-path` from config. The config comes from [src-prod/prod.cljc](src-prod/prod.cljc).
+Later phases will add:
+- Structured claim extraction from longer-form sources
+- Cross-corpus trend analysis
+- Public contribution paths for new evidence layers and assertions
 
+## Tech Stack
 
-# Other Suggestions from my Personal Preferences
+- Clojure + ClojureScript
+- Electric (reactive full-stack)
+- DataScript / Datomic
+- Shadow-CLJS + Tailwind
+- Open data sources: MorphGNT, Open Scriptures, Thayer’s, LSJ, Strong’s (public domain / permissive)
 
-### VS Code Settings.json file
-```JSON
-{
-    "[clojure]": {
-        "editor.autoClosingBrackets": "never",
-        "editor.autoClosingDelete": "never",
-        "editor.autoClosingOvertype": "never",
-        "editor.autoClosingQuotes": "never",
-        "editor.autoSurround": "never",
-        "editor.dragAndDrop": false,
-        "editor.showFoldingControls": "always"
-    },
-    "calva.highlight.commentFormStyle": {},
-    "calva.paredit.defaultKeyMap": "original",
-    "editor.autoClosingBrackets": "never",
-    "editor.autoClosingDelete": "never",
-    "editor.autoClosingOvertype": "never",
-    "editor.autoClosingQuotes": "never",
-    "editor.emptySelectionClipboard": false,
-    "editor.fontFamily": "Fira Code",
-    "editor.fontLigatures": true,
-    "editor.minimap.enabled": false,
-    "explorer.confirmDragAndDrop": false,
-    "git.autofetch": true,
-    "git.confirmSync": false,
-    "workbench.colorTheme": "Visual Studio Light",
-    "calva.prettyPrintingOptions": {
-        "printEngine": "pprint",
-        "enabled": true,
-        "width": 120,
-        "maxLength": 50
-    },
-    "calva.keybindingsEnabled": true,
-    "calva.html2HiccupOptions": {},
+## Getting Started (Early)
 
-    "replacerules.rules": {
-        "ConvertPathDelimiters": {
-            "find": "\\\\",
-            "replace": "\\\\"
-        }
-    }
-}
-```
-I disable Paredit and autoclosing of brackets and quotes since I don't like
-those features. I think they are a bit distracting for new programmers as well
+This project is currently in active foundational development. The most useful contributions at this stage are:
 
-I like Fira Code as a font since it adds ligatures to the code and can help
-with readability. You will need to install Fira Code on your machine for this
-font to work.
+- High-quality ingestion scripts for additional public lexical or manuscript datasets
+- Careful schema design feedback on the Idea/Assertion/Evidence model
+- Tooling for structured extraction that preserves traceability
 
-I also added the extension Replace Rules (bhughes339.replacerules) and this
-gives me the ability to quickly fix the path delimiters when copying directory
-paths.
+See the `data/` directory and ingestion namespaces for the current state of the primitive layer.
 
-I also use the extension Rewrap (stkb.rewrap) which gives the ability to use
-Alt-q to wrap text when editing markdown files and comment strings when writting
-longer comments in clojure.
+## Philosophy
+
+The project operates on a via-negativa principle: progress is made by systematically removing layers of institutional and rhetorical corruption rather than by constructing new positive frameworks. The value lies in making the underlying structure of claims visible and debatable again.
+
+This is fundamentally an engineering and data problem applied to a domain that has historically been treated as purely interpretive.
+
+## License
+
+MIT (or equivalent permissive license — to be confirmed on first tagged release).
+
+---
