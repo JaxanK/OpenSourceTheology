@@ -1,1 +1,1 @@
-(ns user (:require [dev] [KP]))
+(ns user (:require [dev]))
